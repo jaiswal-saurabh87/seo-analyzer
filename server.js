@@ -109,7 +109,10 @@ async function processQueue() {
     job.progress = 100;
     job.completedAt = new Date();
   } catch (error) {
-    console.error(`Error analyzing ${nextJob.url}:`, error.message);
+    console.error("============== ERROR ==============");
+    console.error(error);
+    console.error(error.stack);
+    console.error("===================================");
     job.status = 'error';
     job.error = error.message;
     results.set(nextJob.id, {

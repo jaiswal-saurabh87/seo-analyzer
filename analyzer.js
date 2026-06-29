@@ -65,14 +65,16 @@ async function fetchPageData(url) {
   let browser;
   try {
    browser = await puppeteer.launch({
-  headless: 'new',
-  args: [
-    '--no-sandbox',
-    '--disable-setuid-sandbox',
-    '--disable-dev-shm-usage',
-    '--disable-gpu',
-    '--single-process',
-  ],
+   headless: 'new',
+   args:
+      [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--single-process",
+        "--no-zygote"
+      ],
   executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
 });
     
