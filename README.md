@@ -241,4 +241,5 @@ For issues and questions, please use GitHub Issues.
 ---
 
 **Built with ❤️ by Saurabh Jaiswal**
+<br>
 Last updated: June 2026
