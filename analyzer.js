@@ -6,6 +6,7 @@ import { calculateScores } from './scoring.js';
 
 export async function analyzeWebsite(url) {
   console.log(`Starting analysis for: ${url}`);
+  console.log("Executable Path:", puppeteer.executablePath());
   
   const report = {
     url,
@@ -64,18 +65,17 @@ export async function analyzeWebsite(url) {
 async function fetchPageData(url) {
   let browser;
   try {
-   browser = await puppeteer.launch({
-   headless: 'new',
-   args:
-      [
+    browser = await puppeteer.launch({
+    executablePath: puppeteer.executablePath(),
+    headless: "new",
+    args: [
         "--no-sandbox",
         "--disable-setuid-sandbox",
         "--disable-dev-shm-usage",
         "--disable-gpu",
         "--single-process",
         "--no-zygote"
-      ],
-  executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+    ]
 });
     
     const page = await browser.newPage();
