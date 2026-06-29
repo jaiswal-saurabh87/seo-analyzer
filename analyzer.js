@@ -66,16 +66,10 @@ async function fetchPageData(url) {
   let browser;
   try {
     browser = await puppeteer.launch({
-    executablePath: puppeteer.executablePath(),
-    headless: "new",
-    args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-dev-shm-usage",
-        "--disable-gpu",
-        "--single-process",
-        "--no-zygote"
-    ]
+    executablePath: await chromium.executablePath(),
+    headless: chromium.headless,
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
 });
     
     const page = await browser.newPage();
