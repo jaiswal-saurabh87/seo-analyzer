@@ -1,6 +1,6 @@
 {
   "build": {
-    "builder": "dockerfile"
+    "buildCommand": "npm install && npm run build:frontend"
   },
   "deploy": {
     "startCommand": "npm start",

@@ -37,7 +37,7 @@ A free, open-source SEO analysis tool that crawls your website and provides deta
 - **Performance Score** (20%) - Speed & responsiveness
 - **Overall Score** (0-100) - Composite metric
 
-## Technology Stack
+## Technologies Used
 
 **Backend:**
 - Node.js + Express.js
