@@ -1,12 +1,14 @@
 import puppeteer from 'puppeteer';
 import * as cheerio from 'cheerio';
 import axios from 'axios';
-import { syllable } from 'syllable';
+import {syllable} from 'syllable';
 import { calculateScores } from './scoring.js';
 
+/**
+ * Main analysis function
+ */
 export async function analyzeWebsite(url) {
   console.log(`Starting analysis for: ${url}`);
-  console.log("Executable Path:", puppeteer.executablePath());
   
   const report = {
     url,
@@ -50,11 +52,11 @@ export async function analyzeWebsite(url) {
     // Step 5: Generate findings/recommendations
     generateFindings(report);
 
-    console.log(`Analysis complete for: ${url}`);
+    console.log(`✅ Analysis complete for: ${url}`);
     return report;
 
   } catch (error) {
-    console.error(`Error analyzing ${url}:`, error.message);
+    console.error(`❌ Error analyzing ${url}:`, error.message);
     throw error;
   }
 }
@@ -66,12 +68,10 @@ async function fetchPageData(url) {
   let browser;
   try {
     browser = await puppeteer.launch({
-    executablePath: await chromium.executablePath(),
-    headless: chromium.headless,
-    args: chromium.args,
-    defaultViewport: chromium.defaultViewport,
-});
-    
+      headless: 'new',
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
+
     const page = await browser.newPage();
     
     // Set viewport for mobile-friendly detection
@@ -203,6 +203,9 @@ async function analyzeSEOAudit(pageData) {
   };
 }
 
+/**
+ * Technical SEO: HTTPS, robots.txt, sitemap, redirects, etc
+ */
 async function analyzeTechnicalSEO(url, pageData) {
   const pageUrl = new URL(url);
   const https = pageUrl.protocol === 'https:';

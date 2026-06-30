@@ -16,6 +16,12 @@ const MAX_CONCURRENT_JOBS = 2;
 // Serve static frontend files
 app.use(express.static('frontend/dist'));
 
+// ==================== API ENDPOINTS ====================
+
+/**
+ * POST /api/analyze
+ * Start a new SEO analysis
+ */
 app.post('/api/analyze', async (req, res) => {
   const { url } = req.body;
 
@@ -50,6 +56,10 @@ app.post('/api/analyze', async (req, res) => {
   });
 });
 
+/**
+ * GET /api/results/:id
+ * Get analysis results for a job
+ */
 app.get('/api/results/:id', (req, res) => {
   const { id } = req.params;
   const job = jobQueue.get(id);
@@ -73,6 +83,8 @@ app.get('/api/results/:id', (req, res) => {
     message: job.status === 'processing' ? 'Analyzing website...' : 'Queued',
   });
 });
+
+// ==================== JOB PROCESSING ====================
 
 async function processQueue() {
   // Skip if already processing at max capacity
@@ -109,10 +121,7 @@ async function processQueue() {
     job.progress = 100;
     job.completedAt = new Date();
   } catch (error) {
-    console.error("============== ERROR ==============");
-    console.error(error);
-    console.error(error.stack);
-    console.error("===================================");
+    console.error(`Error analyzing ${nextJob.url}:`, error.message);
     job.status = 'error';
     job.error = error.message;
     results.set(nextJob.id, {
@@ -149,6 +158,6 @@ app.get('*', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`SEO Analyzer running on http://localhost:${PORT}`);
-  console.log(`API: http://localhost:${PORT}/api`);
+  console.log(`🚀 SEO Analyzer running on http://localhost:${PORT}`);
+  console.log(`📊 API: http://localhost:${PORT}/api`);
 });

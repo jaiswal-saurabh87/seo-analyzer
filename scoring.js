@@ -1,3 +1,9 @@
+/**
+ * Scoring System for SEO Analysis
+ * 
+ * Overall Score = (Technical 25% + OnPage 35% + Performance 20% + Content 20%)
+ */
+
 export function calculateScores(analysis) {
   const { seoAudit, technicalSeo, contentAnalysis, performance } = analysis;
 
